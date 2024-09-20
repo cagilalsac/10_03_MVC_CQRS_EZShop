@@ -114,9 +114,11 @@ namespace BLL.Services
 
         public Service Delete(int id)
         {
-            var entity = _db.Users.SingleOrDefault(u => u.Id == id);
-            _db.Users.Remove(entity);
-            _db.SaveChanges();
+            var userCommand = Edit(id);
+            userCommand.IsActive = false;
+            var result = Update(userCommand);
+            if (!result.IsSuccessful)
+                return result;
             return Success("User deleted successfully.");
         }
     }
