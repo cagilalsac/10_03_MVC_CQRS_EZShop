@@ -2,13 +2,19 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace BLL.DAL;
 
 public partial class Store
 {
+    [Key]
     public int Id { get; set; }
 
+    [Required]
+    [StringLength(200)]
     public string Name { get; set; }
 
     public bool IsVirtual { get; set; }
@@ -17,9 +23,14 @@ public partial class Store
 
     public int? CityId { get; set; }
 
+    [ForeignKey("CityId")]
+    [InverseProperty("Stores")]
     public virtual City City { get; set; }
 
+    [ForeignKey("CountryId")]
+    [InverseProperty("Stores")]
     public virtual Country Country { get; set; }
 
+    [InverseProperty("Store")]
     public virtual ICollection<ProductStore> ProductStores { get; set; } = new List<ProductStore>();
 }

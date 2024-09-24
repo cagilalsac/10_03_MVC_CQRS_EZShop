@@ -31,86 +31,35 @@ public partial class Db : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Category>(entity =>
-        {
-            entity.Property(e => e.Name).IsRequired();
-        });
-
         modelBuilder.Entity<City>(entity =>
         {
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(125);
-
             entity.HasOne(d => d.Country).WithMany(p => p.Cities)
-                .HasForeignKey(d => d.CountryId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Cities_Countries");
         });
 
-        modelBuilder.Entity<Country>(entity =>
-        {
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(100);
-        });
-
         modelBuilder.Entity<Product>(entity =>
         {
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(100);
-            entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 2)");
-
-            entity.HasOne(d => d.Category).WithMany(p => p.Products)
-                .HasForeignKey(d => d.CategoryId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+            entity.HasOne(d => d.Category).WithMany(p => p.Products).OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         modelBuilder.Entity<ProductStore>(entity =>
         {
-            entity.HasOne(d => d.Product).WithMany(p => p.ProductStores)
-                .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+            entity.HasOne(d => d.Product).WithMany(p => p.ProductStores).OnDelete(DeleteBehavior.ClientSetNull);
 
-            entity.HasOne(d => d.Store).WithMany(p => p.ProductStores)
-                .HasForeignKey(d => d.StoreId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
-        });
-
-        modelBuilder.Entity<Role>(entity =>
-        {
-            entity.Property(e => e.RoleName)
-                .IsRequired()
-                .HasMaxLength(5);
+            entity.HasOne(d => d.Store).WithMany(p => p.ProductStores).OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         modelBuilder.Entity<Store>(entity =>
         {
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(150);
+            entity.HasOne(d => d.City).WithMany(p => p.Stores).HasConstraintName("FK_Stores_Cities");
 
-            entity.HasOne(d => d.City).WithMany(p => p.Stores)
-                .HasForeignKey(d => d.CityId)
-                .HasConstraintName("FK_Stores_Cities");
-
-            entity.HasOne(d => d.Country).WithMany(p => p.Stores)
-                .HasForeignKey(d => d.CountryId)
-                .HasConstraintName("FK_Stores_Countries");
+            entity.HasOne(d => d.Country).WithMany(p => p.Stores).HasConstraintName("FK_Stores_Countries");
         });
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.Property(e => e.Password)
-                .IsRequired()
-                .HasMaxLength(8);
-            entity.Property(e => e.UserName)
-                .IsRequired()
-                .HasMaxLength(10);
-
             entity.HasOne(d => d.Role).WithMany(p => p.Users)
-                .HasForeignKey(d => d.RoleId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Users_Roles");
         });

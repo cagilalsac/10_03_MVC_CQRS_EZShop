@@ -29,7 +29,7 @@ namespace BLL.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "{0} is required!")]
-        [Length(2, 100, ErrorMessage = "{0} must have minimum {1} maxiumum {2} characters!")]
+        [Length(2, 150, ErrorMessage = "{0} must have minimum {1} maxiumum {2} characters!")]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "{0} is required!")]

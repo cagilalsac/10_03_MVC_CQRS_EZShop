@@ -2,16 +2,24 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace BLL.DAL;
 
 public partial class Country
 {
+    [Key]
     public int Id { get; set; }
 
+    [Required]
+    [StringLength(100)]
     public string Name { get; set; }
 
+    [InverseProperty("Country")]
     public virtual ICollection<City> Cities { get; set; } = new List<City>();
 
+    [InverseProperty("Country")]
     public virtual ICollection<Store> Stores { get; set; } = new List<Store>();
 }

@@ -2,15 +2,22 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace BLL.DAL;
 
 public partial class Product
 {
+    [Key]
     public int Id { get; set; }
 
+    [Required]
+    [StringLength(150)]
     public string Name { get; set; }
 
+    [Column(TypeName = "decimal(18, 2)")]
     public decimal UnitPrice { get; set; }
 
     public int? StockAmount { get; set; }
@@ -19,7 +26,10 @@ public partial class Product
 
     public int CategoryId { get; set; }
 
+    [ForeignKey("CategoryId")]
+    [InverseProperty("Products")]
     public virtual Category Category { get; set; }
 
+    [InverseProperty("Product")]
     public virtual ICollection<ProductStore> ProductStores { get; set; } = new List<ProductStore>();
 }

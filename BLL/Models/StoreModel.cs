@@ -32,7 +32,7 @@ namespace BLL.Models
 
         [Required(ErrorMessage = "{0} is required!")]
         [MinLength(5, ErrorMessage = "{0} must be minimum {1} characters!")]
-        [MaxLength(150, ErrorMessage = "{0} must be maximum {1} characters!")]
+        [MaxLength(200, ErrorMessage = "{0} must be maximum {1} characters!")]
         public string Name { get; set; }
 
         [DisplayName("Virtual")]
