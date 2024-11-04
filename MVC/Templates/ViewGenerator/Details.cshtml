@@ -3,7 +3,7 @@
 @using System.Collections.Generic
 @using System.Linq
 @{
-    var viewModel = "@model " + Model.ViewDataTypeName.Split('.')[Model.ViewDataTypeName.Split('.').Length - 1] + "Query";
+    var viewModel = "@model " + Model.ViewDataTypeName.Split('.')[Model.ViewDataTypeName.Split('.').Length - 1] + "Model";
     var viewDataTypeName = Model.ViewDataTypeName.Split('.')[Model.ViewDataTypeName.Split('.').Length - 1];
 }
 @viewModel
@@ -29,7 +29,7 @@
 @:}
 @:
 @:<div class="@@containerDivClass">
-    @:<h1>@@ViewData["Title"]</h1>
+    @:<h3>@@ViewData["Title"]</h3>
     @:<hr />
 @:</div>
 @:
@@ -108,13 +108,13 @@ foreach (var item in Model.ModelMetadata.ModelType.GetProperties())
 string pkName = GetPrimaryKeyName();
 if (pkName != null)
 {
-    @:<a asp-action="Edit" asp-route-id="@@Model.@pkName">Edit</a>&nbsp;|&nbsp;
-    @:<a asp-action="Delete" asp-route-id="@@Model.@pkName">Delete</a>&nbsp;|&nbsp;
+    @:<a asp-action="Edit" asp-route-id="@@Model.Record.@pkName">Edit</a>&nbsp;|&nbsp;
+    @:<a asp-action="Delete" asp-route-id="@@Model.Record.@pkName">Delete</a>&nbsp;|&nbsp;
     @:<a asp-action="Index">Back to List</a>
 }
 else
 {
-    @:@@Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ })&nbsp;|&nbsp;
+    @:@@Html.ActionLink("Edit", "Edit", new { /* id = Model.Record.PrimaryKey */ })&nbsp;|&nbsp;
     @:<a asp-action="Index">Back to List</a>
 }
 @:</div>

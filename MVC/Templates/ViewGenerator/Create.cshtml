@@ -3,7 +3,7 @@
 @using System.Collections.Generic
 @using System.Linq
 @{
-    var viewModel = "@model " + Model.ViewDataTypeName.Split('.')[Model.ViewDataTypeName.Split('.').Length - 1] + "Command";
+    var viewModel = "@model " + Model.ViewDataTypeName.Split('.')[Model.ViewDataTypeName.Split('.').Length - 1] + "Model";
     var viewDataTypeName = Model.ViewDataTypeName.Split('.')[Model.ViewDataTypeName.Split('.').Length - 1];
     bool dateTimePickerFound = false;
 }
@@ -31,7 +31,7 @@
 @:}
 @:
 @:<div class="@@containerDivClass">
-    @:<h1>@@ViewData["Title"]</h1>
+    @:<h3>@@ViewData["Title"]</h3>
     @:<hr />
 @:</div>
 @:
@@ -68,12 +68,12 @@ foreach (var property in Model.ModelMetadata.Properties)
         if (property.IsForeignKey)
         {
         @:<div class="row mb-3">
-            @:<label asp-for="@property.PropertyName" class="col-2 col-form-label fw-bold"></label>
+            @:<label asp-for="@(property.PropertyName.Remove(property.PropertyName.Length - 2))" class="col-2 col-form-label fw-bold"></label>
 			@:<div class="col-10">
-				@:<select asp-for="@property.PropertyName" class="form-select" asp-items="ViewBag.@property.PropertyName">
+				@:<select asp-for="Record.@property.PropertyName" class="form-select" asp-items="ViewBag.@property.PropertyName">
 					@:<option value="">-- Select --</option>
 				@:</select>
-				@:<span asp-validation-for="@property.PropertyName" class="text-danger"></span>
+				@:<span asp-validation-for="Record.@property.PropertyName" class="text-danger"></span>
 			@:</div>
         @:</div>
             continue;
@@ -83,7 +83,7 @@ foreach (var property in Model.ModelMetadata.Properties)
         @:<div class="row mb-3">
 			@:<label asp-for="@property.PropertyName" class="col-2 col-form-label fw-bold"></label>
 			@:<div class="col-10 pt-2">
-				@:<input class="form-check-input" asp-for="@property.PropertyName" />
+				@:<input class="form-check-input" asp-for="Record.@property.PropertyName" />
             @:</div>
         @:</div>
         }
@@ -92,11 +92,11 @@ foreach (var property in Model.ModelMetadata.Properties)
         @:<div class="row mb-3">
             @:<label asp-for="@property.PropertyName" class="col-2 col-form-label fw-bold"></label>
 			@:<div class="col-10">
-				@:<select asp-for="@property.PropertyName" class="form-select">
+				@:<select asp-for="Record.@property.PropertyName" class="form-select">
 					@:<option value="@@((int)Enum.Value1)">@@Enum.Value1</option>
 					@:<option value="@@((int)Enum.Value2)">@@Enum.Value2</option>
 				@:</select>
-				@:<span asp-validation-for="@property.PropertyName" class="text-danger"></span>
+				@:<span asp-validation-for="Record.@property.PropertyName" class="text-danger"></span>
 			@:</div>
         @:</div>
         }
@@ -106,8 +106,8 @@ foreach (var property in Model.ModelMetadata.Properties)
         @:<div class="row mb-3">
             @:<label asp-for="@property.PropertyName" class="col-2 col-form-label fw-bold"></label>
 			@:<div class="col-10">
-				@:<input asp-for="@property.PropertyName" class="form-control @@dateTimePickerClass" type="text" />
-				@:<span asp-validation-for="@property.PropertyName" class="text-danger"></span>
+				@:<input asp-for="Record.@property.PropertyName" class="form-control @@dateTimePickerClass" type="text" />
+				@:<span asp-validation-for="Record.@property.PropertyName" class="text-danger"></span>
 			@:</div>
         @:</div>
         }
@@ -116,8 +116,8 @@ foreach (var property in Model.ModelMetadata.Properties)
         @:<div class="row mb-3">
             @:<label asp-for="@property.PropertyName" class="col-2 col-form-label fw-bold"></label>
 			@:<div class="col-10">
-			    @:<input asp-for="@property.PropertyName" class="form-control" />
-				@:<span asp-validation-for="@property.PropertyName" class="text-danger"></span>
+			    @:<input asp-for="Record.@property.PropertyName" class="form-control" />
+				@:<span asp-validation-for="Record.@property.PropertyName" class="text-danger"></span>
 			@:</div>
         @:</div>
         }

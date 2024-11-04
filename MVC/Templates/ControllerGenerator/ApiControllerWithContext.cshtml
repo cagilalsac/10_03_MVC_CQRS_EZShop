@@ -29,7 +29,7 @@ namespace @Model.ControllerNamespace
 
     var serviceAbstractType = "I" + Model.ModelTypeName + "Service";
     var serviceAbstractName = Model.ModelVariable + "Service";
-    var modelType = Model.ModelTypeName + "Command";
+    var modelType = Model.ModelTypeName + "Model";
 }
     [Route("api/[controller]")]
     [ApiController]
@@ -70,10 +70,10 @@ namespace @Model.ControllerNamespace
             if (ModelState.IsValid)
             {
                 // Insert item service logic:
-                var result = @("_" + serviceAbstractName).Create(@Model.ModelVariable);
+                var result = @("_" + serviceAbstractName).Create(@(Model.ModelVariable).Record);
                 if (result.IsSuccessful)
                 {
-                    //return CreatedAtAction(nameof(Get), new { id = @(Model.ModelVariable).Id }, @Model.ModelVariable);
+                    //return CreatedAtAction(nameof(Get), new { id = @(Model.ModelVariable).Record.Id }, @(Model.ModelVariable).Record);
                     return Ok(@Model.ModelVariable);
                 }
                 ModelState.AddModelError("@(Model.ModelTypeName + "Post")", result.Message);
@@ -88,7 +88,7 @@ namespace @Model.ControllerNamespace
             if (ModelState.IsValid)
             {
                 // Update item service logic:
-                var result = @("_" + serviceAbstractName).Update(@Model.ModelVariable);
+                var result = @("_" + serviceAbstractName).Update(@(Model.ModelVariable).Record);
                 if (result.IsSuccessful)
                 {
                     //return NoContent();

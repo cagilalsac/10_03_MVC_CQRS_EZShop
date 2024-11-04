@@ -30,7 +30,7 @@
 @:}
 @:
 @:<div class="@@containerDivClass">
-    @:<h1>@@ViewData["Title"]</h1>
+    @:<h3>@@ViewData["Title"]</h3>
     @:<hr />
 @:</div>
 @:
@@ -115,17 +115,17 @@
 				        if (pkName != null)
 				        {
 					        @:<td class="text-end w-25">
-						        @:<a asp-action="Details" asp-route-id="@@item.@pkName">Details</a>&nbsp;|&nbsp;
-						        @:<a asp-action="Edit" asp-route-id="@@item.@pkName">Edit</a>&nbsp;|&nbsp;
-						        @:<a asp-action="Delete" asp-route-id="@@item.@pkName">Delete</a>
+						        @:<a asp-action="Details" asp-route-id="@@item.Record.@pkName">Details</a>&nbsp;|&nbsp;
+						        @:<a asp-action="Edit" asp-route-id="@@item.Record.@pkName">Edit</a>&nbsp;|&nbsp;
+						        @:<a asp-action="Delete" asp-route-id="@@item.Record.@pkName">Delete</a>
 					        @:</td>
 				        }
 				        else
 				        {
 					        <td class="text-end w-25">
-						        @@Html.ActionLink("Details", "Details", new { /* id = item.PrimaryKey */ })&nbsp;|&nbsp;
-						        @@Html.ActionLink("Edit", "Edit", new { /* id = item.PrimaryKey */ })&nbsp;|&nbsp;
-						        @@Html.ActionLink("Delete", "Delete", new { /* id = item.PrimaryKey */ })
+						        @@Html.ActionLink("Details", "Details", new { /* id = item.Record.PrimaryKey */ })&nbsp;|&nbsp;
+						        @@Html.ActionLink("Edit", "Edit", new { /* id = item.Record.PrimaryKey */ })&nbsp;|&nbsp;
+						        @@Html.ActionLink("Delete", "Delete", new { /* id = item.Record.PrimaryKey */ })
 					        </td>
 				        }
 				        @:</tr>
@@ -162,6 +162,6 @@
 
     string GetEnumerableTypeExpression(string typeName)
     {
-        return "IEnumerable<" + typeName.Split('.')[typeName.Split('.').Length - 1] + "Query>";
+        return "IEnumerable<" + typeName.Split('.')[typeName.Split('.').Length - 1] + "Model>";
     }
 }
